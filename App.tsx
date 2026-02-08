@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { analyzeText } from './services/geminiService';
-import { AnalysisResult, HistoryItem, ModelId } from './types';
+import { AnalysisResult, HistoryItem } from './types';
 import { EquationViewer } from './components/EquationViewer';
 import { ThemeChart } from './components/ThemeChart';
 import { DecompositionView } from './components/DecompositionView';
 import { DeductionCard } from './components/DeductionCard';
 import { ReligiousArticle } from './components/ReligiousArticle';
 import { VerseSelector } from './components/VerseSelector';
-import { Sparkles, Search, BookOpen, Loader2, History, RotateCcw, Cpu } from 'lucide-react';
+import { Sparkles, Search, BookOpen, Loader2, History, RotateCcw } from 'lucide-react';
 
 const DEFAULT_TEXT = "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ";
 
@@ -17,7 +17,6 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
-  const [selectedModel, setSelectedModel] = useState<ModelId>('gemini-3-flash-preview');
 
   // Load history on mount
   useEffect(() => {
@@ -50,11 +49,11 @@ const App: React.FC = () => {
     setError(null);
     
     try {
-      const analysis = await analyzeText(inputText, selectedModel);
+      const analysis = await analyzeText(inputText);
       setResult(analysis);
       addToHistory(analysis);
     } catch (err) {
-      setError("حدث خطأ أثناء تحليل النص. يرجى المحاولة مرة أخرى.");
+      setError("حدث خطأ أثناء تحليل النص. يرجى التأكد من الاتصال والمحاولة مرة أخرى.");
     } finally {
       setIsLoading(false);
     }
@@ -94,7 +93,7 @@ const App: React.FC = () => {
           </div>
           <div className="text-center md:text-left">
             <span className="inline-block bg-emerald-900/50 px-4 py-1 rounded-full text-xs text-emerald-100 border border-emerald-800">
-              V 1.0 Beta &bull; Powered by Gemini
+              V 1.0 Beta &bull; Powered by Gemini 3 Flash
             </span>
           </div>
         </div>
@@ -119,30 +118,14 @@ const App: React.FC = () => {
               dir="rtl"
             />
             
-            <div className="flex flex-col md:flex-row items-center justify-between mt-4 gap-4">
+            <div className="flex flex-col md:flex-row items-center justify-end mt-4 gap-4">
               
-              {/* Model Selector */}
-              <div className="flex items-center gap-2 bg-slate-100 p-1.5 rounded-lg border border-slate-200 w-full md:w-auto">
-                <div className="px-2 text-slate-500">
-                  <Cpu size={18} />
-                </div>
-                <select 
-                  value={selectedModel}
-                  onChange={(e) => setSelectedModel(e.target.value as ModelId)}
-                  disabled={isLoading}
-                  className="bg-transparent text-sm font-medium text-slate-700 focus:outline-none cursor-pointer w-full md:w-48"
-                >
-                  <option value="gemini-3-flash-preview">Gemini 3 Flash (افتراضي)</option>
-                  <option value="gemini-2.5-flash-latest">Gemini 2.5 Flash</option>
-                </select>
-              </div>
-
               {/* Action Button */}
               <div className="w-full md:w-auto">
                  <button
                   onClick={handleAnalyze}
                   disabled={isLoading || !inputText.trim()}
-                  className="w-full md:w-auto bg-emerald-800 hover:bg-emerald-900 text-white px-6 py-2 rounded-lg flex items-center justify-center gap-2 font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+                  className="w-full md:w-auto bg-emerald-800 hover:bg-emerald-900 text-white px-8 py-3 rounded-lg flex items-center justify-center gap-2 font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md text-lg"
                 >
                   {isLoading ? (
                     <>

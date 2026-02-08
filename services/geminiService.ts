@@ -1,8 +1,7 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
-import { AnalysisResult, ModelId } from "../types";
+import { AnalysisResult } from "../types";
 
 // In-memory cache to store analysis results
-// Key format: "modelId:textHash" (using simple string length+slice for 'hash' or full text if short)
 const analysisCache = new Map<string, AnalysisResult>();
 
 // Define the response schema for strict JSON output
@@ -47,13 +46,14 @@ const analysisSchema: Schema = {
   required: ["decomposition", "themes", "equation", "deduction", "religiousArticle", "dominantTheme"]
 };
 
-export const analyzeText = async (text: string, modelId: ModelId = 'gemini-3-flash-preview'): Promise<AnalysisResult> => {
+export const analyzeText = async (text: string): Promise<AnalysisResult> => {
   if (!process.env.API_KEY) {
     throw new Error("API Key is missing.");
   }
 
+  const modelId = 'gemini-3-flash-preview';
+
   // 1. Check Cache
-  // Create a somewhat unique key. For very long texts, using the full text as key is fine in JS Map.
   const cacheKey = `${modelId}:${text.trim()}`;
   if (analysisCache.has(cacheKey)) {
     console.log("Serving from cache");

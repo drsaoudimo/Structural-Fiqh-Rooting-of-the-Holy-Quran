@@ -1,4 +1,4 @@
-export type ModelId = 'gemini-3-flash-preview' | 'gemini-2.5-flash-latest';
+export type ModelId = 'gemini-3-flash-preview';
 
 export interface ThemeWeight {
   theme: string;
