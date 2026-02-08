@@ -33,7 +33,7 @@ export const ThemeChart: React.FC<ThemeChartProps> = ({ data }) => {
               contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
             />
             <Bar dataKey="weight" radius={[0, 4, 4, 0]} barSize={30}>
-              {data.map((entry, index) => (
+              {data.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Bar>
