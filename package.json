@@ -8,6 +8,12 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
+
+"overrides": {
+  "glob": "^10.6.0"
+}
+,
+  
   "dependencies": {
     "@google/genai": "^1.40.0",
     "lucide-react": "^0.563.0",
