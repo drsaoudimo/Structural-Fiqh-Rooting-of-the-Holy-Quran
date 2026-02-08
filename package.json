@@ -9,10 +9,11 @@
     "preview": "vite preview"
   },
 
-"overrides": {
+
+
+  "resolutions": {
   "glob": "^10.6.0"
-}
-,
+  },
   
   "dependencies": {
     "@google/genai": "^1.40.0",
