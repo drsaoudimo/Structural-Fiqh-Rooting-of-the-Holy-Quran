@@ -25,6 +25,10 @@
     "typescript": "^5.3.3",
     "vite": "^5.1.4"
   },
+
+    "overrides": {
+    "glob": "^10.6.0"
+   },
   "author": "Dr. Saudi Mohamed Setif",
   "license": "MIT"
 }
